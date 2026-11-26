@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f3f8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://images.unsplash.com; connect-src 'self' https://images.unsplash.com; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="description" content="AK Designer — محرر تصميم صور عربي سريع يعمل مباشرة على جهازك.">
+  <title>AK Designer — استوديو التصميم</title>
+  <link rel="preload" as="image" href="logo-site.jpg" fetchpriority="high">
+  <link rel="icon" type="image/jpeg" href="logo-site.jpg">
+  <link rel="apple-touch-icon" href="logo-site.jpg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css?v=20261125-3">
+</head>
+<body data-theme="light">
+  <div class="ambient-background" aria-hidden="true"><span class="ambient-orb ambient-orb-one"></span><span class="ambient-orb ambient-orb-two"></span><span class="ambient-orb ambient-orb-three"></span><span class="ambient-grid"></span></div>
+  <div class="splash-screen" id="splash-screen" role="status" aria-label="جارٍ تجهيز AK Designer">
+    <div class="splash-content">
+      <img src="logo-site.jpg" alt="" width="96" height="96" fetchpriority="high">
+      <strong>AK DESIGNER</strong>
+      <span class="splash-loader" aria-hidden="true"></span>
+    </div>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="AK Designer"><img class="brand-logo" src="logo-site.jpg" alt=""><span>AK Designer</span></a>
+    <div class="project-name"><span class="status-dot"></span><span id="save-status">تصميم جديد</span></div>
+    <div class="top-actions">
+      <button class="button button-muted" id="studio-3d-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◇</span> وضع 3D</button>
+      <button class="icon-button" id="undo-btn" title="تراجع" aria-label="تراجع">↶</button>
+      <button class="icon-button" id="redo-btn" title="إعادة" aria-label="إعادة">↷</button>
+      <button class="button button-muted pro-entry" id="pro-entry-btn" type="button"><span aria-hidden="true">✦</span> مكتبة التصاميم</button>
+      <button class="button button-muted settings-entry" id="settings-btn" type="button"><span aria-hidden="true">⚙</span> الإعدادات</button>
+      <button class="button button-muted command-entry" id="command-btn" type="button"><span aria-hidden="true">⌘</span> بحث سريع</button>
+      <button class="button button-muted tools-center-entry" id="tools-center-btn" type="button"><span aria-hidden="true">✦</span> مركز الأدوات</button>
+      <button class="button button-muted" id="save-btn">حفظ المشروع</button>
+      <button class="button button-muted" id="backup-btn" title="تنزيل نسخة احتياطية">نسخة احتياطية</button>
+      <button class="button button-muted" id="open-project-btn" title="فتح نسخة احتياطية">فتح نسخة</button>
+      <input id="project-upload" type="file" accept="application/json,.json" hidden>
+      <button class="button button-primary" id="export-btn"><span>↓</span> تحميل PNG</button>
+      <button class="button button-muted" id="export-jpg-btn">تحميل JPG</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar">
+      <div class="sidebar-heading">
+        <div><p class="eyebrow">استوديو إبداعي</p><h1>صمّم فكرتك</h1></div>
+        <span class="sparkle">✳</span>
+      </div>
+
+      <section class="panel">
+        <h2>أضف إلى التصميم</h2>
+        <div class="add-grid">
+          <button class="add-card" id="add-text"><span class="add-icon text-icon">T</span><span>نص</span></button>
+          <button class="add-card" id="add-rect"><span class="add-icon shape-icon">▰</span><span>مستطيل</span></button>
+          <button class="add-card" id="add-circle"><span class="add-icon circle-icon">●</span><span>دائرة</span></button>
+          <button class="add-card logo-add-card" id="logo-studio-trigger"><span class="add-icon">✦</span><span>صانع اللوغو</span></button>
+          <button class="add-card" id="upload-trigger"><span class="add-icon image-icon">▧</span><span>صورة</span></button>
+          <input id="image-upload" type="file" accept="image/*" hidden>
+          <button class="add-card" id="background-upload-trigger"><span class="add-icon">▧</span><span>خلفية صورة</span></button>
+          <input id="background-upload" type="file" accept="image/*" hidden>
+          <button class="add-card social-add-card" id="add-social-links"><span class="add-icon">◎</span><span>بطاقة تواصل</span></button>
+          <button class="add-card" id="scan-trigger"><span class="add-icon">▣</span><span>مسح بالكاميرا</span></button>
+        </div>
+      </section>
+
+      <section class="panel ak-system-panel">
+        <div class="section-title"><h2>AK Arabic Studio</h2><span>نظام موحّد</span></div>
+        <p class="system-intro">قوالب عربية أصلية جاهزة تبدأ منها خلال ثوانٍ.</p>
+        <div class="ak-template-grid" aria-label="قوالب عربية أصلية">
+          <button class="ak-template-card" data-ak-template="announcement" type="button"><strong>إعلان سريع</strong><small>عنوان + عرض + دعوة</small></button>
+          <button class="ak-template-card" data-ak-template="story" type="button"><strong>قصة يومية</strong><small>مقاس عمودي 9:16</small></button>
+          <button class="ak-template-card" data-ak-template="quote" type="button"><strong>اقتباس عربي</strong><small>مساحة هادئة للنص</small></button>
+          <button class="ak-template-card" data-ak-template="product" type="button"><strong>بطاقة منتج</strong><small>سعر وميزة المنتج</small></button>
+        </div>
+        <div class="system-palette" aria-label="ألوان نظام التصميم">
+          <button type="button" data-system-palette="midnight" aria-label="نظام منتصف الليل"><i></i></button>
+          <button type="button" data-system-palette="sand" aria-label="نظام رملي"><i></i></button>
+          <button type="button" data-system-palette="olive" aria-label="نظام زيتوني"><i></i></button>
+          <button type="button" data-system-palette="cobalt" aria-label="نظام أزرق"><i></i></button>
+        </div>
+      </section>
+
+      <details class="shape-picker panel">
+        <summary>أشكال وعناصر <span>٩٢</span></summary>
+        <div id="shape-grid" class="shape-grid" aria-label="مكتبة الأشكال"></div>
+      </details>
+
+      <section class="panel">
+        <h2>مقاس اللوحة</h2>
+        <label class="sr-only" for="canvas-size">مقاس التصميم</label>
+        <select id="canvas-size">
+          <option value="1080x1080">منشور مربع · 1080 × 1080</option>
+          <option value="1080x1350">منشور عمودي · 1080 × 1350</option>
+          <option value="1920x1080">عرض تقديمي · 1920 × 1080</option>
+          <option value="1080x1920">قصة · 1080 × 1920</option>
+        </select>
+      </section>
+
+      <section class="panel color-panel">
+        <div class="section-title"><h2>لون الخلفية</h2><span id="bg-hex">#FFFFFF</span></div>
+        <div class="color-row">
+          <label class="color-picker-wrap" title="اختر لون الخلفية"><input id="background-color" type="color" value="#ffffff"><span class="color-swatch"></span></label>
+          <button class="swatch" data-bg="#ffffff" aria-label="أبيض"></button>
+          <button class="swatch" data-bg="#eaf1ff" aria-label="أزرق فاتح"></button>
+          <button class="swatch" data-bg="#101b33" aria-label="كحلي"></button>
+          <button class="swatch" data-bg="#16181d" aria-label="أسود"></button>
+          <button class="swatch" data-bg="#b8e4dc" aria-label="أخضر هادئ"></button>
+        </div>
+        <button class="clear-background" id="clear-background-image" type="button">إزالة صورة الخلفية</button>
+      </section>
+
+      <section class="panel pro-export-panel">
+        <h2>تصدير الشعار بخلفية شفافة</h2>
+        <div class="pro-export-actions">
+          <button class="button button-muted" id="export-transparent-btn" type="button">PNG شفاف</button>
+          <button class="button button-muted" id="export-svg-btn" type="button">SVG متجهي</button>
+        </div>
+      </section>
+
+      <section class="panel quick-tools-panel">
+        <div class="section-title"><h2>ميزات سريعة</h2><span>جديد</span></div>
+        <div class="quick-tools-grid">
+          <button class="quick-tool" id="brand-kit-btn" type="button"><span>◆</span><strong>هوية العلامة</strong><small>ألوان وخطوط جاهزة</small></button>
+          <button class="quick-tool" id="center-selection-btn" type="button"><span>＋</span><strong>توسيط العنصر</strong><small>محاذاة دقيقة</small></button>
+          <button class="quick-tool" id="auto-arrange-btn" type="button"><span>⌘</span><strong>ترتيب ذكي</strong><small>وزّع العناصر تلقائيًا</small></button>
+          <button class="quick-tool" id="duplicate-selection-btn" type="button"><span>⧉</span><strong>نسخ العنصر</strong><small>طبقة جديدة بسرعة</small></button>
+          <button class="quick-tool" id="clear-canvas-btn" type="button"><span>⌫</span><strong>تنظيف اللوحة</strong><small>ابدأ بتصميم جديد</small></button>
+          <button class="quick-tool" id="grid-toggle-btn" type="button"><span>⌗</span><strong>شبكة المحاذاة</strong><small>ترتيب بصري أدق</small></button>
+          <button class="quick-tool" id="quick-export-btn" type="button"><span>↓</span><strong>تصدير سريع</strong><small>PNG بجودة عالية</small></button>
+          <button class="quick-tool" id="share-project-btn" type="button"><span>↗</span><strong>مشاركة المشروع</strong><small>نسخ رابط ونسخة احتياطية</small></button>
+          <button class="quick-tool" id="export-pack-btn" type="button"><span>▣</span><strong>حزمة التسليم</strong><small>صورة + ملف قابل للتعديل</small></button>
+          <button class="quick-tool" id="project-stats-btn" type="button"><span>◌</span><strong>إحصائيات التصميم</strong><small>قياس الطبقات والمقاس</small></button>
+          <button class="quick-tool" id="design-review-btn" type="button"><span>✓</span><strong>مراجع التصميم</strong><small>افحصه قبل التصدير</small></button>
+        </div>
+      </section>
+
+      <section class="panel layers-panel">
+        <div class="section-title"><h2>الطبقات</h2><span id="layer-count">0</span></div>
+        <div id="layers" class="layers-list"><p class="empty-layers">أضف عنصراً ليظهر هنا</p></div>
+      </section>
+
+    </aside>
+
+    <section class="editor-area" aria-label="مساحة العمل">
+      <div class="editor-toolbar">
+        <div class="canvas-label"><span class="live-dot"></span><span>مساحة العمل</span><span class="toolbar-separator">/</span><span id="dimension-label">1080 × 1080</span></div>
+        <div class="canvas-tools" aria-label="أدوات العرض">
+          <button type="button" class="view-button" id="zoom-out" title="تصغير" aria-label="تصغير">−</button>
+          <button type="button" class="zoom-label" id="zoom-fit" title="ملاءمة اللوحة" aria-label="ملاءمة اللوحة">100%</button>
+          <button type="button" class="view-button" id="zoom-in" title="تكبير" aria-label="تكبير">＋</button>
+          <button type="button" class="view-button" id="toggle-guides" title="إظهار الأدلة" aria-label="إظهار الأدلة">⌗</button>
+        </div>
+      </div>
+      <div class="canvas-scroll">
+        <div class="canvas-frame" id="canvas-frame"><canvas id="design-canvas" width="1080" height="1080" aria-label="لوحة التصميم"></canvas><div class="canvas-empty-state" id="canvas-empty-state"><span>✦</span><strong>ابدأ فكرتك من هنا</strong><small>اختر قالبًا عربيًا أو أضف أول عنصر</small><div><button type="button" id="canvas-start-template">إعلان سريع</button><button type="button" id="canvas-start-text">إضافة نص</button></div></div><div id="selection-toolbar" class="selection-toolbar" hidden><button id="selection-edit-text" type="button" aria-label="تعديل النص" title="تعديل النص" hidden>✎ تعديل النص</button><button id="selection-duplicate" type="button" aria-label="نسخ العنصر" title="نسخ العنصر">⧉</button><button id="selection-delete" type="button" aria-label="حذف العنصر" title="حذف العنصر">⌫ حذف</button></div></div>
+      </div>
+      <div class="editor-hint"><span class="hint-key">اسحب</span> لتحريك العنصر <span class="hint-divider">·</span> <span class="hint-key">Delete</span> لحذفه</div>
+    </section>
+
+    <aside class="properties" id="properties">
+      <div class="properties-heading"><span class="properties-icon">⚙</span><div><h2>خصائص العنصر</h2><p>تحكّم في تفاصيل تصميمك</p></div></div>
+      <div id="property-content" class="property-content">
+        <div class="selection-empty"><div class="empty-icon">✳</div><h3>اختر عنصراً</h3><p>اضغط على أي عنصر في اللوحة لعرض خصائصه وتعديلها</p></div>
+        <div class="shortcut-card"><span class="shortcut-icon">⌘</span><span>تلميح سريع</span><p>يمكنك سحب العناصر بحرية داخل مساحة العمل</p></div>
+      </div>
+    </aside>
+  </main>
+  <nav class="mobile-dock" aria-label="أدوات التصميم للهاتف">
+    <button type="button" data-mobile-panel="elements" aria-label="فتح العناصر"><span>◆</span><strong>عناصر</strong></button>
+    <button type="button" data-mobile-action="text" aria-label="إضافة نص"><span>Ｔ</span><strong>نص</strong></button>
+    <button type="button" data-mobile-action="image" aria-label="إضافة صورة"><span>▧</span><strong>صور</strong></button>
+    <button type="button" data-mobile-panel="background" aria-label="فتح إعدادات الخلفية"><span>◩</span><strong>خلفية</strong></button>
+    <button type="button" data-mobile-panel="more" aria-label="المزيد من أدوات التصميم"><span>•••</span><strong>المزيد</strong></button>
+    <button type="button" data-mobile-action="pro" aria-label="فتح مكتبة التصاميم"><span>✦</span><strong>المكتبة</strong></button>
+    <button type="button" data-mobile-panel="size" aria-label="فتح مقاس التصميم"><span>▦</span><strong>مقاس</strong></button>
+    <button type="button" data-mobile-panel="layers" aria-label="فتح الطبقات"><span>☷</span><strong>طبقات</strong></button>
+    <button type="button" data-mobile-panel="settings" aria-label="فتح خصائص العنصر"><span>⚙</span><strong>خصائص</strong></button>
+    <button type="button" data-mobile-panel="download" aria-label="فتح خيارات التنزيل"><span>↓</span><strong>تنزيل</strong></button>
+    <button type="button" data-mobile-action="camera" aria-label="مسح بالكاميرا"><span>▣</span><strong>كاميرا</strong></button>
+    <button type="button" data-mobile-action="social" aria-label="إنشاء بطاقة تواصل"><span>◎</span><strong>تواصل</strong></button>
+  </nav>
+  <div class="mobile-tool-backdrop" id="mobile-tool-backdrop" hidden></div>
+  <section class="mobile-editor-sheet" id="mobile-editor-sheet" aria-label="إعدادات الأداة" hidden>
+    <div class="mobile-sheet-grabber"></div>
+    <div class="mobile-sheet-heading"><div><span id="mobile-sheet-kicker">AK DESIGNER</span><h2 id="mobile-sheet-title">الأداة</h2></div><button id="mobile-sheet-close" type="button" aria-label="إغلاق الإعدادات">×</button></div>
+    <div class="mobile-sheet-content" id="mobile-sheet-content"></div>
+  </section>
+  <footer class="site-footer">
+    <span class="footer-brand"><img class="footer-brand-logo" src="logo-site.jpg" alt="">© AK Designer</span>
+    <div class="footer-contact"><span class="footer-contact-mark" aria-hidden="true">✉</span><span><strong>تواصل مع المطوّر</strong><small>Ahmad khaled · اقتراحاتك تساعدنا نطوّر الاستوديو</small></span><a class="footer-instagram" href="https://www.instagram.com/Ahmad_abuamr07/" target="_blank" rel="noopener noreferrer" aria-label="تواصل مع المطور على إنستغرام">راسلني على Instagram <span aria-hidden="true">↗</span></a></div>
+    <span class="footer-privacy">معالجة محلية · لا نرفع صورك</span>
+    <span class="footer-warning">يحفظ تلقائياً على جهازك · نزّل نسخة احتياطية لنقل المشروع</span>
+  </footer>
+  <dialog class="pro-library" id="pro-library" aria-labelledby="pro-library-title">
+    <div class="pro-library-card">
+      <div class="library-brandbar"><span class="library-brandmark"><img src="logo-site.jpg" alt="">AK Designer</span><span>استوديو التصميم العربي · قوالب أصلية محفوظة محليًا</span><b>AK ORIGINALS</b></div>
+      <header class="pro-library-header">
+        <div><p class="pro-kicker">AK DESIGNER · DESIGN LIBRARY</p><h2 id="pro-library-title">مكتبة التصاميم الجاهزة</h2><p>قوالب أصلية للسوشيال ميديا والهوية والإعلانات، بطبقات قابلة للتحرير والتصدير.</p></div>
+        <button class="pro-dialog-close" type="button" data-close-dialog="pro-library" aria-label="إغلاق">×</button>
+      </header>
+      <div class="pro-library-tools">
+        <label class="pro-search-wrap"><span aria-hidden="true">⌕</span><input id="pro-template-search" type="search" placeholder="ابحث عن شعار أو إعلان أو نمط..." autocomplete="off" aria-label="ابحث في المكتبة"></label>
+        <label class="sr-only" for="pro-type-filter">نوع التصميم</label>
+        <select id="pro-type-filter" class="pro-category-filter" aria-label="نوع التصميم">
+          <option value="all">الشعارات والإعلانات</option>
+          <option value="logo">الشعارات · 120</option>
+          <option value="ad">الإعلانات · 40</option>
+        </select>
+        <label class="sr-only" for="pro-category-filter">تصفية حسب الفئة</label>
+        <select id="pro-category-filter" class="pro-category-filter" aria-label="تصفية حسب الفئة">
+          <option value="all">كل التصاميم</option>
+          <option value="games">متاجر الألعاب</option>
+          <option value="fashion">متاجر الملابس</option>
+          <option value="social">متاجر السوشيال</option>
+          <option value="fire">جواهر Free Fire</option>
+          <option value="projects">مشاريع متنوعة</option>
+        </select>
+        <label class="sr-only" for="pro-style-filter">النمط البصري</label>
+        <select id="pro-style-filter" class="pro-category-filter" aria-label="النمط البصري">
+          <option value="all">كل الأنماط</option>
+          <option value="minimal">Minimal</option><option value="modern">Modern</option>
+          <option value="luxury">Luxury</option><option value="gaming">Gaming</option>
+          <option value="three-d">3D</option><option value="mascot">Mascot</option>
+        </select>
+        <span class="pro-result-count" id="pro-result-count" aria-live="polite"></span>
+      </div>
+      <div class="pro-template-grid" id="pro-template-grid" aria-label="قوالب مكتبة التصاميم"></div>
+      <label class="pro-favorites-filter"><input id="pro-favorites-only" type="checkbox"> المفضلة فقط <span id="pro-favorites-count">0</span></label>
+      <p class="pro-empty-results" id="pro-empty-results" hidden>ما لقينا تصميماً مطابقاً. جرّب بحثاً أو تصنيفاً مختلفاً.</p>
+        <p class="pro-library-note">كل تصميم يتكوّن من طبقات أصلية مستقلة. افتح المعاينة لتعديله أو تصديره، مع علامة AK Designer أسفل كل تنزيل.</p>
+    </div>
+  </dialog>
+  <dialog class="pro-preview-dialog" id="pro-preview-dialog" aria-labelledby="pro-preview-title">
+    <div class="pro-preview-card">
+      <header class="pro-preview-header"><div><p class="pro-kicker" id="pro-preview-kicker">معاينة التصميم</p><h2 id="pro-preview-title">التصميم</h2><p id="pro-preview-description"></p></div><button class="pro-dialog-close" type="button" data-close-dialog="pro-preview-dialog" aria-label="إغلاق المعاينة">×</button></header>
+      <div class="pro-preview-art" id="pro-preview-art"></div>
+      <div class="pro-preview-actions">
+        <button class="button button-muted" id="pro-preview-png" type="button">تنزيل PNG</button>
+        <button class="button button-muted" id="pro-preview-secondary" type="button">تنزيل SVG</button>
+        <button class="button button-primary" id="pro-preview-apply" type="button">فتح الطبقات للتحرير</button>
+      </div>
+    </div>
+  </dialog>
+  <div id="scan-modal" class="scan-modal" hidden>
+    <section class="scan-dialog" role="dialog" aria-modal="true" aria-labelledby="scan-title">
+      <div class="scan-header"><div><h2 id="scan-title">مسح صورة بالكاميرا</h2><p>وجّه الكاميرا نحو الصورة ثم التقطها لإضافتها إلى التصميم</p></div><button id="scan-close" class="icon-button" aria-label="إغلاق">×</button></div>
+      <video id="scan-video" autoplay playsinline></video>
+      <div class="scan-actions"><button id="scan-capture" class="button button-primary">التقاط الصورة</button><button id="scan-cancel" class="button button-muted">إلغاء</button></div>
+      <p class="scan-note">يتطلب استخدام الكاميرا موافقتك، وقد لا تعمل الكاميرا عند فتح الملف مباشرة. جرّب localhost أو HTTPS.</p>
+    </section>
+  </div>
+  <div id="social-modal" class="social-modal" hidden>
+    <section class="social-dialog" role="dialog" aria-modal="true" aria-labelledby="social-title">
+      <div class="social-header"><div><p class="eyebrow">AK DESIGNER · SOCIAL KIT</p><h2 id="social-title">بطاقة تواصل مرتبة</h2><p>أنشئ شريطاً أنيقاً يعرض حساباتك جنباً إلى جنب.</p></div><button id="social-close" class="icon-button" type="button" aria-label="إغلاق">×</button></div>
+      <form id="social-form">
+        <div class="social-fields">
+          <label class="social-field"><span><i class="social-dot instagram-dot"></i>إنستغرام</span><input id="social-instagram" type="text" maxlength="48" value="@yourbrand" autocomplete="off"></label>
+          <label class="social-field"><span><i class="social-dot whatsapp-dot"></i>واتساب</span><input id="social-whatsapp" type="text" maxlength="32" value="+966 5X XXX XXXX" autocomplete="off" dir="ltr"></label>
+          <label class="social-field"><span><i class="social-dot email-dot"></i>البريد الإلكتروني</span><input id="social-email" type="email" maxlength="64" value="hello@example.com" autocomplete="off" dir="ltr"></label>
+        </div>
+        <label class="social-accent"><span>لون البطاقة</span><input id="social-accent" type="color" value="#477cff"></label>
+        <label class="social-accent"><span>نمط البطاقة</span><select id="social-style"><option value="luxury">فاخر داكن</option><option value="editorial">تحريري أنيق</option><option value="neon">نيون اجتماعي</option><option value="minimal">أبيض بسيط</option><option value="glass">زجاجي هادئ</option></select></label>
+        <div class="social-preview" aria-hidden="true"><span>◎ Instagram</span><span>◉ WhatsApp</span><span>✉ Email</span></div>
+        <div class="social-actions"><button class="button button-muted" id="social-cancel" type="button">إلغاء</button><button class="button button-primary" type="submit">✦ إضافة إلى التصميم</button></div>
+      </form>
+    </section>
+  </div>
+  <dialog class="logo-studio-dialog" id="logo-studio-dialog" aria-labelledby="logo-studio-title">
+    <div class="logo-studio-card">
+      <header class="logo-studio-header">
+        <div><p class="eyebrow">AK DESIGNER · LOGO STUDIO</p><h2 id="logo-studio-title">صانع اللوغو</h2><p>10,000 مثال أصلي لـ5,000 متجر ونشاط، وكل شعار يتحول إلى طبقات قابلة للتعديل.</p></div>
+        <button class="pro-dialog-close" id="logo-studio-close" type="button" aria-label="إغلاق صانع اللوغو">×</button>
+      </header>
+      <div class="logo-studio-tools">
+        <label class="pro-search-wrap"><span aria-hidden="true">⌕</span><input id="logo-search" type="search" placeholder="ابحث عن متجر أو نشاط..." autocomplete="off" aria-label="ابحث في الشعارات"></label>
+        <select id="logo-industry-filter" aria-label="تصفية حسب النشاط"><option value="all">كل الأنشطة</option><option value="food">مطاعم ومقاهي</option><option value="fashion">أزياء وجمال</option><option value="tech">تقنية وألعاب</option><option value="home">منزل وعقار</option><option value="services">خدمات وتعليم</option></select>
+        <select id="logo-style-filter" aria-label="تصفية حسب الأسلوب"><option value="all">كل الأساليب</option><option value="minimal">بسيط</option><option value="modern">عصري</option><option value="luxury">فاخر</option><option value="bold">جريء</option><option value="organic">عضوي</option></select>
+        <span id="logo-result-count" class="pro-result-count">10,000 شعار</span>
+      </div>
+      <div id="logo-grid" class="logo-grid" aria-label="نماذج الشعارات"></div>
+      <div class="logo-studio-pagination"><button id="logo-prev" class="button button-muted" type="button">السابق</button><span id="logo-page-label">1 / 417</span><button id="logo-next" class="button button-muted" type="button">التالي</button></div>
+      <p id="logo-empty-results" class="pro-empty-results" hidden>لا توجد نتائج مطابقة.</p>
+    </div>
+  </dialog>
+  <dialog class="settings-dialog" id="settings-dialog" aria-labelledby="settings-title">
+    <div class="settings-card">
+      <header class="settings-header"><div><p class="eyebrow">AK DESIGNER · CONTROL CENTER</p><h2 id="settings-title">الإعدادات والمعلومات</h2><p>كل ما تحتاجه لفهم الموقع وضبط طريقة العمل.</p></div><button class="pro-dialog-close" id="settings-close" type="button" aria-label="إغلاق الإعدادات">×</button></header>
+      <div class="settings-layout">
+        <aside class="settings-nav" aria-label="أقسام الإعدادات"><button class="settings-tab active" data-settings-tab="about" type="button">عن الموقع</button><button class="settings-tab" data-settings-tab="account" type="button">ملفي الشخصي</button><button class="settings-tab" data-settings-tab="brand" type="button">هوية العلامة</button><button class="settings-tab" data-settings-tab="stats" type="button">الإحصائيات والسلة</button><button class="settings-tab" data-settings-tab="usage" type="button">طريقة الاستخدام</button><button class="settings-tab" data-settings-tab="terms" type="button">الشروط والخصوصية</button><button class="settings-tab" data-settings-tab="shortcuts" type="button">الاختصارات</button></aside>
+        <div class="settings-content">
+          <section class="settings-panel active" data-settings-panel="about"><h3>استوديو تصميم محلي</h3><p>AK Designer محرر تصميم عربي يعمل مباشرة على جهازك. صورك ومشاريعك تبقى محليًا ولا يتم رفعها إلى خادم خارجي.</p><div class="settings-info-grid"><div><strong>الإصدار</strong><span>1.0.0</span></div><div><strong>الهوية</strong><span>AK Arabic Studio</span></div><div><strong>التصدير</strong><span>PNG · JPG · SVG</span></div><div><strong>الحفظ</strong><span>محلي وتلقائي</span></div></div><button class="button button-primary" id="theme-toggle-btn" type="button">تبديل مظهر الموقع</button></section>
+          <section class="settings-panel" data-settings-panel="brand"><h3>هوية العلامة</h3><p>احفظ ألوانك وخطك ليصيروا مرجعًا ثابتًا لتصاميمك القادمة.</p><div class="brand-kit-form"><label>اسم العلامة<input id="brand-name-input" type="text" maxlength="60" placeholder="اسم مشروعك"></label><label>اللون الأساسي<input id="brand-primary-input" type="color" value="#477cff"></label><label>اللون المساعد<input id="brand-accent-input" type="color" value="#f59e0b"></label><label>الخط المفضل<select id="brand-font-input"><option value="Cairo">Cairo</option><option value="Arial">Arial</option><option value="Tahoma">Tahoma</option><option value="Georgia">Georgia</option></select></label></div><div class="settings-actions"><button class="button button-primary" id="save-brand-kit-btn" type="button">حفظ الهوية</button><button class="button button-muted" id="apply-brand-kit-btn" type="button">تطبيق على العنصر</button></div></section>
+          <section class="settings-panel" data-settings-panel="stats"><h3>الإحصائيات والسلة</h3><div class="settings-info-grid"><div><strong>عدد الطبقات</strong><span id="stats-layer-count">0</span></div><div><strong>مقاس اللوحة</strong><span id="stats-canvas-size">1080 × 1080</span></div><div><strong>سجل التراجع</strong><span id="stats-history-count">0</span></div><div><strong>المحذوفات القابلة للاسترجاع</strong><span id="stats-trash-count">0</span></div></div><div class="settings-actions"><button class="button button-primary" id="restore-trash-btn" type="button">استرجاع آخر عنصر</button><button class="button button-muted" id="save-version-btn" type="button">حفظ نسخة الآن</button></div></section>
+          <section class="settings-panel" data-settings-panel="usage"><h3>طريقة الاستخدام</h3><ol><li>اختر نصًا أو شكلًا أو صورة أو لوغو من الأدوات الجانبية.</li><li>اضغط على العنصر لتعديل اللون والحجم والخط والدوران من الخصائص.</li><li>اسحب العنصر داخل اللوحة، واستخدم Delete للحذف وCtrl+Z للتراجع.</li><li>احفظ نسخة احتياطية قبل نقل المشروع إلى جهاز آخر.</li><li>استخدم PNG/JPG للمشاركة وSVG للتصاميم المتجهة.</li></ol></section>
+          <section class="settings-panel" data-settings-panel="terms"><h3>الشروط والخصوصية</h3><p>المستخدم مسؤول عن الصور والخطوط والعلامات التي يستوردها. لا تستخدم موادًا لا تملك حق استخدامها.</p><p>المعالجة محلية داخل المتصفح. قد تُحفظ نسخة المشروع في Local Storage على جهازك، لذلك امسح بيانات المتصفح إذا كنت تستخدم جهازًا مشتركًا.</p><p>القوالب واللوغوهات المولّدة داخل الموقع أمثلة أصلية وليست شعارات علامات تجارية حقيقية.</p></section>
+          <section class="settings-panel" data-settings-panel="shortcuts"><h3>اختصارات مفيدة</h3><div class="shortcut-list"><span><kbd>Ctrl</kbd> + <kbd>Z</kbd><b>تراجع</b></span><span><kbd>Ctrl</kbd> + <kbd>Y</kbd><b>إعادة</b></span><span><kbd>Delete</kbd><b>حذف العنصر</b></span><span><kbd>Esc</kbd><b>إغلاق النافذة</b></span><span><kbd>Shift</kbd> + سحب<b>تحريك أدق</b></span></div></section>
+        </div>
+      </div>
+    </div>
+  </dialog>
+  <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+    <div class="command-card">
+      <header class="command-header"><div><p class="eyebrow">AK DESIGNER · COMMAND CENTER</p><h2 id="command-title">ماذا تريد أن تصمم؟</h2></div><button class="pro-dialog-close" id="command-close" type="button" aria-label="إغلاق البحث السريع">×</button></header>
+      <label class="command-search"><span aria-hidden="true">⌕</span><input id="command-search-input" type="search" placeholder="ابحث عن قالب أو أداة..." autocomplete="off" aria-label="البحث السريع"></label>
+      <div class="command-list" id="command-list" role="listbox" aria-label="نتائج البحث السريع"></div>
+      <p class="command-hint"><kbd>Ctrl</kbd> + <kbd>K</kbd> لفتح البحث السريع <span>·</span> <kbd>Esc</kbd> للإغلاق</p>
+    </div>
+  </dialog>
+
+  <dialog class="tools-center-dialog" id="tools-center-dialog" aria-labelledby="tools-center-title">
+    <div class="tools-center-card">
+      <header class="tools-center-header"><div><p class="eyebrow">AK DESIGNER · TOOLBOX</p><h2 id="tools-center-title">مركز الأدوات</h2><p>كل أدوات الاستوديو في مكان واحد، وقابلة للتوسع بدون ازدحام الواجهة.</p></div><button class="pro-dialog-close" id="tools-center-close" type="button" aria-label="إغلاق مركز الأدوات">×</button></header>
+      <div class="tools-center-controls"><label class="command-search"><span aria-hidden="true">⌕</span><input id="tools-center-search" type="search" placeholder="ابحث عن أداة..." autocomplete="off" aria-label="البحث في الأدوات"></label><div class="tools-center-tabs" id="tools-center-tabs" role="tablist" aria-label="تصنيفات الأدوات"></div></div>
+      <div class="tools-center-grid" id="tools-center-grid" aria-label="قائمة أدوات التصميم"></div>
+      <footer class="tools-center-footer"><span><strong id="tools-center-count">0</strong> أداة جاهزة</span><span>مصممة لتعمل محليًا على جهازك</span></footer>
+    </div>
+  </dialog>
+
+  <dialog class="review-dialog" id="design-review-dialog" aria-labelledby="design-review-title">
+    <div class="review-card">
+      <header class="review-header"><div><p class="eyebrow">AK DESIGNER · QUALITY CHECK</p><h2 id="design-review-title">مراجع التصميم</h2><p>ملاحظات سريعة تساعدك تطلع تصميمًا أوضح قبل التصدير.</p></div><button class="pro-dialog-close" id="design-review-close" type="button" aria-label="إغلاق المراجع">×</button></header>
+      <div class="review-score" id="design-review-score"></div>
+      <div class="review-list" id="design-review-list"></div>
+      <footer class="review-footer"><button class="button button-muted" id="design-review-export" type="button">تصدير بعد المراجعة</button><span>الفحص محلي ولا يرفع تصميمك.</span></footer>
+    </div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=20261125-3"></script>
+</body>
+</html>

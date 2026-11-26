@@ -1,0 +1,16 @@
+{
+  "name": "AK Designer — استوديو التصميم العربي",
+  "short_name": "AK Designer",
+  "version": "2.0.0",
+  "description": "محرر تصميم عربي سريع يعمل محليًا مع قوالب أصلية.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#477cff",
+  "icons": [
+    { "src": "logo-site.jpg", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable" },
+    { "src": "logo-site.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable" }
+  ]
+}
